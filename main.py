@@ -8,10 +8,20 @@ from stats import (
 )
 import sys
 
-if len(sys.argv) < 2:
+if len(sys.argv) != 2:
     print("Usage: python3 main.py <path_to_book>")
     sys.exit(1)
 book_path = sys.argv[1]
+
+try:
+    with open(book_path, "r", encoding="utf-8") as f:
+        text = f.read()
+except FileNotFoundError:
+    print(f"Error: file not found: {book_path}")
+    sys.exit(1)
+except OSError as e:
+    print(f"Error opening file: {e}")
+    sys.exit(1)
 
 book = get_book_text_lowercase(book_path)
 
